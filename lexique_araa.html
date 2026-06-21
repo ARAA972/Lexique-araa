@@ -1,5 +1,208 @@
-Lexique Stratégique — Groupe ARAA
-Entreprise · Finance · Stratégie · Droit
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexique Stratégique — Groupe ARAA</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F8F9FA;color:#1F2937;min-height:100vh}
+.top-bar{background:#1E3A5F;color:#fff;padding:1.2rem 1.5rem}
+.top-bar h1{font-size:18px;font-weight:600;letter-spacing:0.03em}
+.top-bar p{font-size:12px;opacity:0.7;margin-top:2px}
+.container{max-width:900px;margin:0 auto;padding:1.2rem 1rem}
+.toolbar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.search-wrap{position:relative;flex:1;min-width:180px}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;opacity:0.4;pointer-events:none}
+#srch{width:100%;padding:9px 12px 9px 34px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;color:#1F2937;font-size:14px;outline:none}
+#srch:focus{border-color:#1E3A5F}
+.filters{display:flex;gap:5px;flex-wrap:wrap}
+.pill{padding:5px 12px;border-radius:20px;font-size:12px;border:1px solid #E5E7EB;background:#fff;color:#6B7280;cursor:pointer;font-weight:500}
+.pill.active{background:#1E3A5F;color:#fff;border-color:#1E3A5F}
+.alpha{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:1rem}
+.ab{width:28px;height:28px;border-radius:6px;border:1px solid #E5E7EB;background:#fff;color:#9CA3AF;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ab.has{border-color:#CBD5E1;color:#374151}
+.ab.off{opacity:0.2;cursor:default;pointer-events:none}
+.count{font-size:12px;color:#9CA3AF;margin-bottom:0.6rem}
+.sec-ltr{font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:0.12em;padding:1rem 0 0.4rem;border-top:1px solid #F3F4F6;margin-top:4px}
+.sec-ltr:first-of-type{border-top:none;padding-top:0}
+.card{background:#fff;border:1px solid #F3F4F6;border-radius:12px;padding:0.85rem 1.1rem;margin-bottom:6px;cursor:pointer}
+.card:hover{border-color:#E5E7EB;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.card.open{border-color:#CBD5E1;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.ct{display:flex;align-items:center;gap:10px}
+.sig{font-size:15px;font-weight:700;color:#1E3A5F;min-width:70px}
+.cm{flex:1;overflow:hidden}
+.cfr{font-size:13px;font-weight:600;color:#1F2937;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cen{font-size:11px;color:#9CA3AF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.badge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;white-space:nowrap;flex-shrink:0}
+.chev{flex-shrink:0;font-size:14px;color:#9CA3AF;transition:transform 0.2s;display:inline-block}
+.card.open .chev{transform:rotate(180deg)}
+.det{display:none;padding-top:0.8rem;margin-top:0.8rem;border-top:1px solid #F3F4F6}
+.card.open .det{display:block}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-bottom:10px}
+.di label{font-size:10px;color:#9CA3AF;letter-spacing:0.08em;display:block;margin-bottom:2px;font-weight:600}
+.di span{font-size:13px;color:#1F2937}
+.df label{font-size:10px;color:#9CA3AF;letter-spacing:0.08em;display:block;margin-bottom:3px;font-weight:600}
+.df span{font-size:13px;color:#374151;line-height:1.6}
+.empty{text-align:center;padding:3rem 1rem;color:#9CA3AF;font-size:14px}
+footer{text-align:center;padding:2rem 1rem;font-size:11px;color:#9CA3AF;border-top:1px solid #F3F4F6;margin-top:1rem}
+@media(max-width:600px){.sig{min-width:55px;font-size:13px}.dg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <h1>Lexique Stratégique — Groupe ARAA</h1>
+  <p>Entreprise &middot; Finance &middot; Stratégie &middot; Droit</p>
+</div>
+<div class="container">
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="srch" placeholder="Rechercher un sigle, un mot clé…" autocomplete="off">
+    </div>
+    <div class="filters" id="fils"></div>
+  </div>
+  <div class="alpha" id="alph"></div>
+  <div class="count" id="cnt"></div>
+  <div id="list"></div>
+  <footer>Lexique Groupe ARAA &copy; 2025</footer>
+</div>
+<script>
+var DATA = [
+  {sigle:"BFR",en:"Working Capital Requirement",fr:"Besoin en fonds de roulement",detail:"Besoin de trésorerie pour financer le cycle d'exploitation",cat:"Finance",ex:"Stocks + créances"},
+  {sigle:"CA",en:"Revenue / Turnover",fr:"Chiffre d'affaires",detail:"Total des ventes réalisées sur une période donnée",cat:"Finance",ex:"22 M€"},
+  {sigle:"CAC",en:"Customer Acquisition Cost",fr:"Coût d'acquisition client",detail:"Coût moyen dépensé pour acquérir un nouveau client",cat:"Marketing",ex:"Budget pub / nb clients"},
+  {sigle:"CAPEX",en:"Capital Expenditures",fr:"Dépenses d'investissement",detail:"Investissements dans des actifs durables (machines et infrastructures)",cat:"Finance",ex:"Construction usine"},
+  {sigle:"DCF",en:"Discounted Cash Flow",fr:"Flux de trésorerie actualisés",detail:"Méthode de valorisation d'entreprise basée sur les flux futurs actualisés",cat:"Finance",ex:"Valorisation startup"},
+  {sigle:"DG",en:"Director General",fr:"Directeur Général",detail:"Dirigeant responsable de l'ensemble des opérations d'une entreprise",cat:"Gouvernance",ex:"PDG d'une SA"},
+  {sigle:"EBE",en:"Excédent Brut d'Exploitation",fr:"Résultat d'exploitation brut",detail:"Mesure proche de l'EBITDA en comptabilité française",cat:"Finance",ex:"Rentabilité brute"},
+  {sigle:"EBITDA",en:"Earnings Before Interest Taxes Depreciation and Amortization",fr:"Résultat avant intérêts impôts et amortissements",detail:"Mesure de la performance opérationnelle avant charges financières et comptables",cat:"Finance",ex:"Valorisation d'entreprise"},
+  {sigle:"ETP",en:"Equivalent Temps Plein",fr:"Équivalent temps plein",detail:"Unité de mesure des effectifs salariés ramenés à un temps plein",cat:"RH",ex:"3 ETP = 3 postes à 100%"},
+  {sigle:"FDR",en:"Fonds de Roulement",fr:"Fonds de roulement net global",detail:"Excédent des ressources stables sur les emplois stables",cat:"Finance",ex:"Capitaux permanents - Actif immobilisé"},
+  {sigle:"IP",en:"Intellectual Property",fr:"Propriété intellectuelle",detail:"Ensemble des droits exclusifs sur les créations de l'esprit",cat:"Juridique",ex:"Marque déposée"},
+  {sigle:"KPI",en:"Key Performance Indicator",fr:"Indicateur clé de performance",detail:"Indicateur utilisé pour mesurer l'atteinte des objectifs stratégiques",cat:"Stratégie",ex:"CA / marge / conversion"},
+  {sigle:"LBO",en:"Leveraged Buy-Out",fr:"Rachat avec effet de levier",detail:"Acquisition d'entreprise financée majoritairement par la dette",cat:"Finance / M&A",ex:"Private equity"},
+  {sigle:"LOI",en:"Letter of Intent",fr:"Lettre d'intention",detail:"Document précontractuel formalisant l'intention d'entrer en négociation exclusive",cat:"Juridique / M&A",ex:"Avant une acquisition"},
+  {sigle:"M&A",en:"Mergers and Acquisitions",fr:"Fusions-acquisitions",detail:"Opérations de fusion ou rachat d'entreprises",cat:"Finance / M&A",ex:"Achat société"},
+  {sigle:"MBO",en:"Management Buy-Out",fr:"Rachat par les dirigeants",detail:"Acquisition d'une entreprise par son propre équipe de direction",cat:"Finance / M&A",ex:"Reprise interne"},
+  {sigle:"MVP",en:"Minimum Viable Product",fr:"Produit minimum viable",detail:"Version minimale d'un produit permettant de tester une hypothèse marché",cat:"Stratégie / Innovation",ex:"Premier prototype"},
+  {sigle:"NDA",en:"Non-Disclosure Agreement",fr:"Accord de confidentialité",detail:"Contrat interdisant de divulguer des informations confidentielles",cat:"Juridique",ex:"Avant une due diligence"},
+  {sigle:"NPS",en:"Net Promoter Score",fr:"Score de recommandation client",detail:"Indicateur mesurant la propension des clients à recommander un produit",cat:"Marketing",ex:"Score de -100 à +100"},
+  {sigle:"OPEX",en:"Operating Expenses",fr:"Dépenses opérationnelles",detail:"Coûts liés au fonctionnement quotidien de l'entreprise",cat:"Finance",ex:"Salaires et énergie"},
+  {sigle:"P&L",en:"Profit and Loss Statement",fr:"Compte de résultat",detail:"Document comptable synthétisant revenus et charges sur une période donnée",cat:"Finance",ex:"Résultat net annuel"},
+  {sigle:"ROE",en:"Return on Equity",fr:"Rentabilité des capitaux propres",detail:"Mesure de la rentabilité générée pour les actionnaires sur leurs fonds investis",cat:"Finance",ex:"Bénéfice net / capitaux propres"},
+  {sigle:"ROI",en:"Return on Investment",fr:"Retour sur investissement",detail:"Mesure de la rentabilité d'un investissement",cat:"Finance",ex:"1€ investi vers 1,5€ retour"},
+  {sigle:"SCI",en:"Société Civile Immobilière",fr:"Société civile immobilière",detail:"Structure juridique française dédiée à la détention et gestion de biens immobiliers",cat:"Juridique / Immobilier",ex:"SCI ARAA"},
+  {sigle:"SLA",en:"Service Level Agreement",fr:"Accord de niveau de service",detail:"Contrat définissant les engagements de qualité et disponibilité entre prestataire et client",cat:"Opérations",ex:"Délai de livraison garanti"},
+  {sigle:"SWOT",en:"Strengths Weaknesses Opportunities Threats",fr:"Forces Faiblesses Opportunités Menaces",detail:"Outil d'analyse stratégique évaluant les facteurs internes et externes d'une organisation",cat:"Stratégie",ex:"Diagnostic stratégique"},
+  {sigle:"TIR",en:"Taux Interne de Rentabilité",fr:"Taux interne de rentabilité",detail:"Taux d'actualisation qui annule la VAN - mesure la rentabilité d'un investissement",cat:"Finance",ex:"TIR > coût du capital = rentable"},
+  {sigle:"USP",en:"Unique Selling Proposition",fr:"Proposition de valeur unique",detail:"Élément différenciant d'un produit ou service par rapport à la concurrence",cat:"Marketing",ex:"Produit bio local"},
+  {sigle:"VAN",en:"Net Present Value",fr:"Valeur actuelle nette",detail:"Différence entre la valeur actualisée des flux futurs et l'investissement initial",cat:"Finance",ex:"VAN > 0 = projet rentable"},
+  {sigle:"VC",en:"Venture Capital",fr:"Capital-risque",detail:"Financement en fonds propres de startups ou entreprises à fort potentiel de croissance",cat:"Finance / M&A",ex:"Levée de fonds série A"}
+];
 
-Rechercher un sigle, un mot clé…
-Lexique Groupe ARAA © 2025
+var CAT_STYLE = {
+  "Finance":{bg:"#DBEAFE",fg:"#1E3A8A"},
+  "Finance / M&A":{bg:"#EDE9FE",fg:"#4C1D95"},
+  "Stratégie":{bg:"#DCFCE7",fg:"#14532D"},
+  "Stratégie / Innovation":{bg:"#D1FAE5",fg:"#064E3B"},
+  "Marketing":{bg:"#FEF9C3",fg:"#713F12"},
+  "RH":{bg:"#FFE4E6",fg:"#881337"},
+  "Juridique":{bg:"#FED7AA",fg:"#7C2D12"},
+  "Juridique / M&A":{bg:"#FDE8D8",fg:"#7C2D12"},
+  "Juridique / Immobilier":{bg:"#FDE8D8",fg:"#7C2D12"},
+  "Opérations":{bg:"#E0F2FE",fg:"#0C4A6E"},
+  "Gouvernance":{bg:"#F3F4F6",fg:"#1F2937"}
+};
+
+var activeCat = "all";
+var searchQ = "";
+var openIdx = null;
+
+function buildFilters() {
+  var cats = ["all"];
+  DATA.forEach(function(d) { if (cats.indexOf(d.cat) === -1) cats.push(d.cat); });
+  var html = "";
+  cats.forEach(function(c) {
+    html += '<button class="pill' + (c === activeCat ? ' active' : '') + '" onclick="setCat(this)">' + (c === "all" ? "Tous" : c) + '</button>';
+  });
+  document.getElementById("fils").innerHTML = html;
+}
+
+function setCat(btn) {
+  activeCat = btn.textContent === "Tous" ? "all" : btn.textContent;
+  openIdx = null;
+  buildFilters();
+  render();
+}
+
+function getFiltered() {
+  var q = searchQ.toLowerCase();
+  return DATA.filter(function(d) {
+    var catOk = activeCat === "all" || d.cat === activeCat;
+    var textOk = !q || d.sigle.toLowerCase().indexOf(q) > -1 || d.fr.toLowerCase().indexOf(q) > -1 || d.en.toLowerCase().indexOf(q) > -1 || d.detail.toLowerCase().indexOf(q) > -1;
+    return catOk && textOk;
+  });
+}
+
+function render() {
+  var items = getFiltered();
+  document.getElementById("cnt").textContent = items.length + " entrée" + (items.length !== 1 ? "s" : "");
+
+  var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  var present = {};
+  items.forEach(function(d) { if (d.sigle[0]) present[d.sigle[0].toUpperCase()] = true; });
+  var alphHtml = "";
+  letters.forEach(function(l) {
+    alphHtml += '<button class="ab ' + (present[l] ? "has" : "off") + '" onclick="scrollToLetter('' + l + '')">' + l + '</button>';
+  });
+  document.getElementById("alph").innerHTML = alphHtml;
+
+  if (!items.length) {
+    document.getElementById("list").innerHTML = '<div class="empty">Aucun résultat.</div>';
+    return;
+  }
+
+  var html = "";
+  var last = "";
+  items.forEach(function(d, i) {
+    var ltr = d.sigle[0] ? d.sigle[0].toUpperCase() : "";
+    if (ltr !== last) { html += '<div class="sec-ltr" data-ltr="' + ltr + '">' + ltr + '</div>'; last = ltr; }
+    var st = CAT_STYLE[d.cat] || {bg:"#F3F4F6",fg:"#374151"};
+    var isOpen = openIdx === i;
+    html += '<div class="card' + (isOpen ? ' open' : '') + '" onclick="toggle(' + i + ')">';
+    html += '<div class="ct">';
+    html += '<span class="sig">' + d.sigle + '</span>';
+    html += '<div class="cm"><div class="cfr">' + d.fr + '</div><div class="cen">' + d.en + '</div></div>';
+    html += '<span class="badge" style="background:' + st.bg + ';color:' + st.fg + '">' + d.cat + '</span>';
+    html += '<span class="chev">' + (isOpen ? '&#8679;' : '&#8681;') + '</span>';
+    html += '</div>';
+    html += '<div class="det">';
+    html += '<div class="dg"><div class="di"><label>SIGLE</label><span>' + d.sigle + '</span></div><div class="di"><label>EXEMPLE</label><span>' + (d.ex || "—") + '</span></div></div>';
+    html += '<div class="df"><label>SIGNIFICATION DÉTAILLÉE</label><span>' + d.detail + '</span></div>';
+    html += '</div></div>';
+  });
+  document.getElementById("list").innerHTML = html;
+}
+
+function toggle(i) {
+  openIdx = (openIdx === i) ? null : i;
+  render();
+}
+
+function scrollToLetter(l) {
+  var el = document.querySelector('[data-ltr="' + l + '"]');
+  if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+document.getElementById("srch").addEventListener("input", function(e) {
+  searchQ = e.target.value;
+  openIdx = null;
+  render();
+});
+
+buildFilters();
+render();
+</script>
+</body>
+</html>
